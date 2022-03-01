@@ -28,8 +28,8 @@ export default {};
 }
 .v-enter-to {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0px;
+  left: 0px;
 }
 .v-enter-active {
   transition: left 0.7s;
