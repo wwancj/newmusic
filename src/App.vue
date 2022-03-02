@@ -1,11 +1,7 @@
 
 <template>
   <div id="app">
-    <div id="nav">
-      <!-- <router-link to="/Home">Home</router-link> |
-      <router-link to="/about">About</router-link>-->
-      <!-- <router-link to='/my'>my</router-link> -->
-    </div>
+ 
     <div id="vie">
       <transition>
         <router-view></router-view>

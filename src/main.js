@@ -22,7 +22,7 @@ Vue.prototype.$gettime= function time(nS) {
 // axios.defaults.baseURL="https://autumnfish.cn"
 // axios.defaults.baseURL="http://localhost:3000"
 axios.defaults.withCredentials = true; 
-axios.defaults.baseURL="http://wancj.top/api"
+axios.defaults.baseURL=process.env.VUE_APP_API_URL
 // axios.defaults.baseURL="http://127.0.0.1/api"
 
 

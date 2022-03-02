@@ -1,6 +1,6 @@
-<template> 
-  <div class="aa">
-    <div class=" na">
+<template>
+  <div class="aa" >
+    <div class="na">
       <div class="nav row">
         <div class="col-sm-2 row">
           <img
@@ -14,26 +14,22 @@
         </div>
         <div class="col-sm-5 mynav">
           <div class="rowe">
+            <div class="col-sm-2 ff">发现音乐</div>
             <div class="col-sm-2 ff">
-              
-              发现音乐
-              </div>
-            <div class="col-sm-2 ff"><router-link :to='{path:"/mylist"}' tag="div" active-class="heig">我的音乐</router-link></div>
+              <router-link
+                :to="{ path: '/mylist' }"
+                tag="div"
+                active-class="heig"
+                >我的音乐</router-link
+              >
+            </div>
             <div class="col-sm-2 ff">歌手</div>
             <div class="col-sm-2 ff">歌单</div>
             <div class="col-sm-2 ff">排行</div>
           </div>
         </div>
         <div class="col-sm-3 nav_c">
-    
-
-       
-        <musicSearch></musicSearch>
-
-
-
-
-        
+          <musicSearch></musicSearch>
         </div>
 
         <div class="col-sm-2 row userlogin">
@@ -51,16 +47,21 @@
                   登录选项<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item >
-                    <div @click="textlogin">检查登录</div>
-                    </el-dropdown-item>
-                  <el-dropdown-item><router-link to="/login">登录</router-link></el-dropdown-item>
                   <el-dropdown-item>
-                    <div @click="outlogin">
-                       退出登录
-                    </div>
-                   
-                    </el-dropdown-item>
+                    <div @click="textlogin">检查登录</div>
+                  </el-dropdown-item>
+                  <el-dropdown-item>
+                    <!-- <router-link to="/login">
+                  登录
+                  </router-link> -->
+                    <el-button type="text" @click="dialogFormVisible = true"
+                      >打开嵌套表单的 Dialog</el-button
+                    >
+                  </el-dropdown-item>
+           
+                  <el-dropdown-item>
+                    <div @click="outlogin">退出登录</div>
+                  </el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </div>
@@ -68,71 +69,72 @@
         </div>
       </div>
     </div>
-
-
-  <router-view>
-    
-  </router-view>
-
+      <loginform :dialogFormVisible="dialogFormVisible"  @guanbi="loginfromshow"></loginform>
+    <router-view> </router-view>
   </div>
 </template>
 
 <script>
 import musicSearch from "./musicSearch";
-import bangdan from './bangdan.vue'
+import bangdan from "./bangdan.vue";
+
+import loginform from "./login/loginform.vue";
 export default {
   data() {
     return {
       input4: "",
+      dialogFormVisible: false,
     };
   },
   name: "Home",
-  components: { musicSearch ,bangdan},
+  components: { musicSearch, bangdan,loginform },
   methods: {
-  textlogin(){
-    
-    this.$axios.get("/user/account").then((data)=>{
-      
-       console.log("登录信息",data.data.account);
-       this.$axios
-      .get("/user/level")
-      .then((data) => {
-        // console.log(data.data.data, "lv");
-        // this.lv = data.data.data.level + data.data.data.progress;
-             this.$notify({
-          title: '成功',
-          message: '已经登录',
-          type: 'success',
-           position: 'top-left'
-        });
-      })
-      .catch((err) => {
-        console.log("未登录");
-             this.$notify({
-          title: '警告',
-          message: '未登录，部分功能无法使用，请登录',
-          type: 'warning',
-           position: 'top-left'
-        });
+    textlogin() {
+      this.$axios.get("/user/account").then((data) => {
+        console.log("登录信息", data.data.account);
+        this.$axios
+          .get("/user/level")
+          .then((data) => {
+            // console.log(data.data.data, "lv");
+            // this.lv = data.data.data.level + data.data.data.progress;
+            this.$notify({
+              title: "成功",
+              message: "已经登录",
+              type: "success",
+              position: "top-left",
+            });
+          })
+          .catch((err) => {
+            console.log("未登录");
+            this.$notify({
+              title: "警告",
+              message: "未登录，部分功能无法使用，请登录",
+              type: "warning",
+              position: "top-left",
+            });
+          });
       });
-
-    })
+    },
+    outlogin() {
+      this.$axios.get("/logout").then((result) => {
+        localStorage.removeItem("userid");
+        console.log("退出登录", result);
+      });
+    },
+    loginfromshow(res){
+      alert(res)
+      this.dialogFormVisible=res
+   
+    }
   },
-  outlogin(){
-     this.$axios.get("/logout").then((result)=>{
-       localStorage.removeItem("userid")
-       console.log("退出登录",result);
-     })
-  }
+  created() {
+     alert(process.env.VUE_APP_API_URL)
+    this.$axios.get("/user/account").then((data) => {
+      //  console.log("用户信息",data.data.account.id);
+      // localStorage.setItem("userid",data.data.account.id)
+     
+    });
   },
-  created(){
-    this.$axios.get("/user/account").then((data)=>{
-       console.log("用户信息",data.data.account.id);
-      localStorage.setItem("userid",data.data.account.id)
-       
-    })
-  }
-
 };
 </script>
 
@@ -142,21 +144,19 @@ export default {
 @import url("https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css");
 
 //nav 激活时的样式
-.heig{
-//  background-color: #242424;
- height: 100%;
- animation: heig 2s forwards;
+.heig {
+  //  background-color: #242424;
+  height: 100%;
+  animation: heig 2s forwards;
 }
 @keyframes heig {
   from {
-     background-color: #545c63;
+    background-color: #545c63;
   }
-  to{
-     background-color: #242424;
+  to {
+    background-color: #242424;
   }
 }
-
-
 
 .aa {
   width: 100vw;
@@ -167,16 +167,13 @@ export default {
 
   .na {
     background-color: #545c63;
-  border-bottom: 4px #C20C0C solid;
-  color: #CCCCCC;
-
+    border-bottom: 4px #c20c0c solid;
+    color: #cccccc;
   }
 }
 .mynav {
-
   div {
     text-align: center;
-  
   }
 }
 .nav_c {
@@ -192,7 +189,6 @@ export default {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
-  
 }
 
 .row_3 {
@@ -210,9 +206,6 @@ export default {
   padding: 0 10px;
 
   min-height: 70vh;
-  
 }
-
-
 </style>
 
