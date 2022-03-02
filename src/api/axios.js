@@ -5,6 +5,7 @@ baseURL:process.env.VUE_APP_API_URL,
 timeout:10000
 })
 
+export const api=login_api
 
 
 login_api.interceptors.request.use(function (config) {

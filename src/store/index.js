@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from "axios";
-// axios.defaults.baseURL="http://127.0.0.1/api"
-axios.defaults.baseURL="http://wancj.top/api"
+
+axios.defaults.baseURL=process.env.VUE_APP_API_URL
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -11,7 +11,7 @@ export default new Vuex.Store({
     musicids:[],
     num:1111111111111,
     songs:[],
-    //全局音乐列表
+  
     musics:[],
     //全局 音乐索引
     cindex:0,
@@ -45,27 +45,7 @@ export default new Vuex.Store({
         context.commit('setloading',value)
     },
 
-     // id 分析器
-    //  async musicfx(context,value){
-    //     console.log(value,"vuex 分析器");
-    //     for(let item of value){
-    //        axios.get("/song/url",{params:{
-    //          id:item.id
-    //        }}).then((data)=>{
-    //         //  console.log(data.data.data);
-    //          let [{url}]=data.data.data
-    //         //  console.log(url);
-    //          item.source=url
-    //          item.url=""
-    //          item.favorited=false
-    //        })
-    //     }
-    //     console.log(value);
-    //  },
     
-
-
-    // 这个方法需要传入 一个 songs 数组
    async songsfx(context,value){
       let arr=[]            
       for(let item of value){
@@ -76,9 +56,7 @@ export default new Vuex.Store({
       await axios.get("/song/url",{params:{
           id:item.id
         }}).then((data)=>{
-         //  console.log(data.data.data);
           let [{url}]=data.data.data
-         //  console.log(url);
           item.source=url
           item.url=""
           item.favorited=false

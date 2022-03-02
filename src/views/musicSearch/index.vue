@@ -5,6 +5,7 @@
       v-model="musicname"
       :fetch-suggestions="querySearch"
       placeholder="请输入内容"
+      @keyup.enter="sear"
     
     >
      <i
@@ -103,6 +104,14 @@ export default {
       })
       console.log(this.searchlist);
       console.log("搜索热门推荐",result.data.result.hots);
+    })
+  },
+  mounted(){
+    let that=this
+    document.querySelector('input[placeholder="请输入内容"]').addEventListener("keydown",function(e){
+      if(e.key=="Enter"){
+        that.sear()
+      }
     })
   }
 };

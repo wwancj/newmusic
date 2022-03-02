@@ -1,83 +1,92 @@
 <template>
-  <div class="aa" >
-    <div class="na">
-      <div class="nav row">
-        <div class="col-sm-2 row">
-          <img
-            src="https://cn.vitejs.dev/logo.svg"
-            alt=""
-            width="50px"
-            height="50px"
-            class="col-sm-4"
-          />
-          <div class="col-sm-8" style="font-size: 30px; color: #fff">vite</div>
-        </div>
-        <div class="col-sm-5 mynav">
-          <div class="rowe">
-            <div class="col-sm-2 ff">发现音乐</div>
-            <div class="col-sm-2 ff">
-              <router-link
-                :to="{ path: '/mylist' }"
-                tag="div"
-                active-class="heig"
-                >我的音乐</router-link
-              >
-            </div>
-            <div class="col-sm-2 ff">歌手</div>
-            <div class="col-sm-2 ff">歌单</div>
-            <div class="col-sm-2 ff">排行</div>
-          </div>
-        </div>
-        <div class="col-sm-3 nav_c">
-          <musicSearch></musicSearch>
-        </div>
-
-        <div class="col-sm-2 row userlogin">
-          <div class="row_3">
+  <div class="aa">
+    <canvas id="particle-canvas"></canvas>
+    <div id="con">
+      <div class="na">
+        <div class="nav row">
+          <div class="col-sm-2 row">
             <img
               src="https://cn.vitejs.dev/logo.svg"
               alt=""
-              width="40px"
-              height="40px"
+              width="50px"
+              height="50px"
+              class="col-sm-4"
             />
+            <div class="col-sm-8" style="font-size: 30px; color: #fff">
+              vite
+            </div>
+          </div>
+          <div class="col-sm-5 mynav">
+            <div class="rowe">
+              <div class="col-sm-2 ff">发现音乐</div>
+              <div class="col-sm-2 ff">
+                <router-link
+                  :to="{ path: '/mylist' }"
+                  tag="div"
+                  active-class="heig"
+                  >我的音乐</router-link
+                >
+              </div>
+              <div class="col-sm-2 ff">歌手</div>
+              <div class="col-sm-2 ff">歌单</div>
+              <div class="col-sm-2 ff">排行</div>
+            </div>
+          </div>
+          <div class="col-sm-3 nav_c">
+            <musicSearch></musicSearch>
+          </div>
 
-            <div class="dropdown">
-              <el-dropdown>
-                <el-button type="primary">
-                  登录选项<i class="el-icon-arrow-down el-icon--right"></i>
-                </el-button>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>
-                    <div @click="textlogin">检查登录</div>
-                  </el-dropdown-item>
-                  <el-dropdown-item>
-                    <!-- <router-link to="/login">
+          <div class="col-sm-2 row userlogin">
+            <div class="row_3">
+              <img
+                src="https://cn.vitejs.dev/logo.svg"
+                alt=""
+                width="40px"
+                height="40px"
+              />
+
+              <div class="dropdown">
+                <el-dropdown>
+                  <el-button type="primary">
+                    登录选项<i class="el-icon-arrow-down el-icon--right"></i>
+                  </el-button>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>
+                      <div @click="textlogin">检查登录</div>
+                    </el-dropdown-item>
+                    <el-dropdown-item>
+                      <!-- <router-link to="/login">
                   登录
                   </router-link> -->
-                    <el-button type="text" @click="dialogFormVisible = true"
-                      >打开嵌套表单的 Dialog</el-button
-                    >
-                  </el-dropdown-item>
-           
-                  <el-dropdown-item>
-                    <div @click="outlogin">退出登录</div>
-                  </el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
+                      <el-button type="text" @click="dialogFormVisible = true"
+                        >立即登录</el-button
+                      >
+                    </el-dropdown-item>
+
+                    <el-dropdown-item>
+                      <div @click="outlogin">退出登录</div>
+                    </el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <loginform
+        :dialogFormVisible="dialogFormVisible"
+        @guanbi="loginfromshow"
+      ></loginform>
+
+      <router-view></router-view>
     </div>
-      <loginform :dialogFormVisible="dialogFormVisible"  @guanbi="loginfromshow"></loginform>
-    <router-view> </router-view>
   </div>
 </template>
 
 <script>
 import musicSearch from "./musicSearch";
 import bangdan from "./bangdan.vue";
-
+import { animation } from "./body2/index.js";
 import loginform from "./login/loginform.vue";
 export default {
   data() {
@@ -87,7 +96,7 @@ export default {
     };
   },
   name: "Home",
-  components: { musicSearch, bangdan,loginform },
+  components: { musicSearch, bangdan, loginform },
   methods: {
     textlogin() {
       this.$axios.get("/user/account").then((data) => {
@@ -121,19 +130,18 @@ export default {
         console.log("退出登录", result);
       });
     },
-    loginfromshow(res){
-      alert(res)
-      this.dialogFormVisible=res
-   
-    }
+    loginfromshow(res) {
+      this.dialogFormVisible = res;
+    },
   },
   created() {
-     alert(process.env.VUE_APP_API_URL)
     this.$axios.get("/user/account").then((data) => {
       //  console.log("用户信息",data.data.account.id);
       // localStorage.setItem("userid",data.data.account.id)
-     
     });
+  },
+  mounted() {
+    animation();
   },
 };
 </script>
@@ -141,8 +149,15 @@ export default {
 
 
 <style lang="less" scoped>
-@import url("https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css");
+// @import url("https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css");
 
+
+#particle-canvas {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(to bottom, rgb(10, 10, 50) 0%,rgb(60, 10, 60) 100%);
+  vertical-align: middle;
+}
 //nav 激活时的样式
 .heig {
   //  background-color: #242424;
@@ -159,22 +174,49 @@ export default {
 }
 
 .aa {
-  width: 100vw;
+  width: 100%;
 
   // height: 55px;
-  padding: 0 75px;
+  position: relative;
+  top: 0;
   line-height: 55px;
 
+#con{
+  width: 85vw;
+  position:absolute;
+   left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+  // margin-left:100px;
+  div{
+    //  backdrop-filter: blur(14px) saturate(150%);
+    // background-color:rgba(255,255,255,0.15)
+    //  color: rgba(red, green, blue, 1.0);
+  }
+  
+}
   .na {
-    background-color: #545c63;
-    border-bottom: 4px #c20c0c solid;
-    color: #cccccc;
+    // background-color: #545c63;
+    // border-bottom: 4px #c20c0c solid;
+    color: #000;
+
+    //  backdrop-filter: blur(14px) saturate(150%);
+    background-color:rgba(255,255,255,0.15)
   }
 }
 .mynav {
+  
   div {
     text-align: center;
+    //  backdrop-filter: blur(14px) saturate(150%);
+    // background-color:rgba(255,255,255,0.15)
   }
+  //  backdrop-filter: blur(14px) saturate(150%);
+  //   background-color:rgba(255,255,255,0.15)
+
+
+    
+
 }
 .nav_c {
   display: flex;
@@ -196,9 +238,11 @@ export default {
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
+  //  backdrop-filter: blur(14px) saturate(150%);
+  //   background-color:rgba(255,255,255,0.15)
 }
 .bg-purple {
-  background-color: #778ba6;
+  // background-color: #778ba6;
 
   border-radius: 4px;
   margin-top: 20px;

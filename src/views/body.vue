@@ -132,11 +132,12 @@ export default {
   align-items: center;
 }
 .bg-purple {
-  background-color: #778ba6;
-
+  // background-color: #778ba6;
+ backdrop-filter: blur(14px) saturate(150%);
+ background-color:rgba(255,255,255,0.15);
   border-radius: 4px;
   margin-top: 20px;
-  box-shadow: 2px 2px 13px #333333;
+  // box-shadow: 2px 2px 13px #333333;
   padding: 0 10px;
 
   min-height: 90vh;

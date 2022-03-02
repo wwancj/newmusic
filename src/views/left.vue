@@ -34,7 +34,7 @@ export default {
   align-items: center;
 }
 .bg-purple {
-  background-color: #778ba6;
+  // background-color: #778ba6;
 
   border-radius: 4px;
   margin-top: 20px;

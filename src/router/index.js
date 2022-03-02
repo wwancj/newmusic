@@ -9,65 +9,60 @@ Vue.use(VueRouter);
 
 
 
-let mylist={
-  path:"/mylist",
-  name:"mylist", 
+let mylist = {
+  path: "/mylist",
+  name: "mylist",
   components: {
-    left:()=>import("../views/mylist/myleft"),
-     right:()=>import('../views/mylist/myright.vue'),
-     bfq:()=>import("../views/bofangqi")
+    left: () => import("../views/mylist/myleft"),
+    right: () => import('../views/mylist/myright.vue'),
+    bfq: () => import("../views/bofangqi")
   }
 }
+
+let body={
+  path: "/body",
+  name: "body",
+  redirect: "./list3",
+  component: () => import("../views/body"),
+  children: [{
+    path: "/bofangqi",
+    name: "bofangqi",
+    components: {
+      left: () => import('../views/left.vue'),
+      myleft: () => import('../views/mylist/myleft.vue'),
+      right: () => import("../views/bofangqi")
+    }
+  }
+
+    , {
+    path: "/list3",
+    name: "list3",
+    components: {
+      right: () => import('../views/list3.vue'),
+      left: () => import("../views/left.vue"),
+      bfq: () => import("../views/bofangqi")
+    }
+  },
+    mylist
+
+  ]
+
+}
+
+let body1={
+    path:"/body2",
+    name:"body2",
+    component:()=>import("@/views/body2/body2")
+}
+
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home,
     redirect: "./body",
-    children: [{
-      path: "/body",
-      name: "body",
-      redirect: "./list3",
-      component: () => import("../views/body"),
-      children: [{
-        path: "/bofangqi",
-        name: "bofangqi",
-        // component: () => import('../views/bofangqi')
-        components: {
-          left:() => import('../views/left.vue'),
-          myleft:()=>import('../views/mylist/myleft.vue'),
-          right:()=>import("../views/bofangqi")
-        }
-      }
+    children: [body,body1]
 
-        , {
-        path: "/list3",
-        name: "list3",
-        // component: () => import('../views/list3.vue'),
-        components: {
-          right:() => import('../views/list3.vue'),
-          left:()=>import("../views/left.vue"),
-          bfq:()=>import("../views/bofangqi")
-        }
-      },
-      mylist
-
-      ]
-
-    }]
-    //     children:[ {
-    //     path:"/bofangqi",
-    //     name:"bofangqi",
-    //     component:()=>import('../views/bofangqi')
-    //   }
-
-    //   ,{
-    //     path:"/list3",
-    //     name:"list3",
-    //     component:()=>import('../views/list3.vue')
-    //   },
-
-    // ]
   }
   , {
     path: "/login",
