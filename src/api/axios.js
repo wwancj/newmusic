@@ -84,6 +84,12 @@ export async function logout(){
     let logout=login_api.get("/logout")
     return logout
 }
+
+export async function islogin(){
+    let islogin=login_api.get("/login/status")
+    return islogin
+}
+
 // export default {
     
 // }

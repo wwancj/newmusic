@@ -1,8 +1,9 @@
 
 <template>
-  <div id="app">
- 
+  <div id="app" >
+   
     <div id="vie">
+    
       <transition>
         <router-view></router-view>
       </transition>
@@ -10,11 +11,28 @@
   </div>
 </template>
 <script>
-export default {};
+import imgurl from '@/assets/back.jpg'
+
+export default {
+data(){
+  return {
+    //  imgUrl:require('@/assets/back.jpg')
+    imgurl
+  }
+  
+},
+
+};
+// url(https://wallpapershome.com/images/wallpapers/macos-big-sur-1280x720-dark-wwdc-2020-22655.jpg)
 </script>
 
 
 <style >
+
+#app{
+  background-image: url("~@/assets/back.jpg");
+  background-size: cover;
+}
 .v-enter {
   position: absolute;
   top: 0;
@@ -51,27 +69,18 @@ export default {};
   width : 10px;  /*高宽分别对应横竖滚动条的尺寸*/
   height: 1px;
   }
-  *::-webkit-scrollbar-thumb {
-  /*滚动条里面小方块*/
-  border-radius   : 10px;
-  background-color: skyblue;
-  background-image: -webkit-linear-gradient(
-      45deg,
-      rgba(255, 255, 255, 0.2) 25%,
-      transparent 25%,
-      transparent 50%,
-      rgba(255, 255, 255, 0.2) 50%,
-      rgba(255, 255, 255, 0.2) 75%,
-      transparent 75%,
-      transparent
-  );
-  }
-  *::-webkit-scrollbar-track {
-  /*滚动条里面轨道*/
-  box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
-  background   : #ededed;
-  border-radius: 10px;
-  }
+ 
+
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-bg);
+    border-radius: 10px;
+}
 
 
 

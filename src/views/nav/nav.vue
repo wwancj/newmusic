@@ -1,71 +1,64 @@
 <template>
   <div class="na">
-    <!-- <router-link
-                  :to="{ path: '/mylist' }"
-                  tag="div"
-                  active-class="heig"
-                  >我的音乐</router-link
-                > -->
+ 
 
     <el-row>
-      <el-col :span="5">
-
+      <el-col :span="4">
         <div class="icon">
-          <i class="el-icon-arrow-left" style="color:aliceblue"></i>
-          <i class="el-icon-arrow-right" style="color:aliceblue"></i> 
-          <i class="el-icon-refresh-right" style="color:aliceblue"></i>
+          <i class="el-icon-arrow-left" style="color: aliceblue"></i>
+          <i class="el-icon-arrow-right" style="color: aliceblue"></i>
+          <i class="el-icon-refresh-right" style="color: aliceblue"></i>
         </div>
-        
       </el-col>
 
-      <el-col
-      :span="19"
-        >
-        
-        
-        <div >
-          <el-menu
-            class="el-menu-demo"
-            mode="horizontal"
-            background-color="rgba(255, 255, 255, 0.15)"
-          >
-            <!-- <el-menu-item index="5">
-          <el-dropdown>
-            <el-button type="primary">
-              登录选项<i class="el-icon-arrow-down el-icon--right"></i>
-            </el-button>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>
-                <div @click="textlogin">检查登录</div>
-              </el-dropdown-item>
-              <el-dropdown-item>
-               
-                <el-button type="text" @click="dialogFormVisible = true"
-                  >立即登录</el-button
-                >
-              </el-dropdown-item>
+      <el-col :span="19">
+        <div class="bb">
+          <el-row>
+            <el-col :span="2">
+              <div class="navitem">音乐</div>
+            </el-col>
+            <el-col :span="2">
+              <div class="navitem">mv</div>
+            </el-col>
+            <el-col :span="2">
+              <div class="navitem">歌单</div>
+            </el-col>
+            <el-col :span="5">
+              <div class="navitem">
+                <musicSearch></musicSearch>
+              </div>
+            </el-col>
 
-              <el-dropdown-item >
-                <div @click="outlogin">退出登录</div>
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown></el-menu-item
-        > -->
-            <el-menu-item index="1" style="">处理中心</el-menu-item>
+            <el-col :span="5">
+              <div class="navitem kk"></div>
+            </el-col>
+            <el-col :span="5">
+              <div class="navitem">wwww</div>
+            </el-col>
+            <el-col :span="2">
+              <div class="navitem ">
+              
+                <el-badge :value="1" class="item" type="primary">
+                <i class="el-icon-message-solid" style="font-size: 30px; "></i>
+ 
+               </el-badge>
 
-            <el-menu-item index="3"
-              ><div class="item">333333</div></el-menu-item
-            >
-            <el-menu-item index="4">订单管理</el-menu-item>
-            <el-menu-item index="6"> <musicSearch></musicSearch></el-menu-item>
-          </el-menu></div
-      ></el-col>
+              </div>
+            </el-col>
+            <el-col :span="2">
+              <div class="navitem user" @click="login">
+                <el-avatar
+                  src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                ></el-avatar>
+              </div>
+            </el-col>
+          </el-row>
+
+        </div></el-col
+      >
     </el-row>
 
-    <loginform
-      :dialogFormVisible="dialogFormVisible"
-      @guanbi="loginfromshow"
-    ></loginform>
+  
   </div>
 </template>
 <script>
@@ -80,6 +73,10 @@ export default {
   },
   components: { musicSearch, loginform },
   methods: {
+    login(){
+      this.$router.push("/list3/body/login")
+    },
+
     textlogin() {
       this.$axios.get("/user/account").then((data) => {
         console.log("登录信息", data.data.account);
@@ -117,6 +114,7 @@ export default {
     },
   },
   mounted() {
+    // alert(window.location.hash)
     // console.log();
     // document.querySelectorAll(`[class="el-menu-item"]`).forEach((item)=>{
     //   item.addEventListener("mouseover",()=>{
@@ -128,7 +126,11 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.icon{
+.el-badge__content,.is-fixed{
+  // position: absolute;
+  top:20px
+}
+.icon {
   margin: 20px auto;
   width: 100px;
   font-size: 1.2rem;
@@ -136,30 +138,51 @@ export default {
   flex-direction: row;
   justify-content: space-between;
 }
+.kk::after {
+  content: "qqq";
+}
+.navitem {
+  color: var(--inactive-color);
+  text-align: center;
+  // align-items: center;
+  // display: flex;
+  // flex-direction: row;
+  // align-items: center;
+  // height: 100%;
+  line-height: 60px;
+}
 .el-menu {
-  background: transparent;
+  background-color: var(--theme-bg-color);
+  backdrop-filter: blur(20px);
   // width: 900px;
   // position: relative;
   // float: right;
 
   // right: 0;
 }
+.user {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  height: 100%;
+}
 .na {
+  color: var(--theme-color);
   // display: flex;
 
-  -webkit-border-top-left-radius:1em;
--webkit-border-top-right-radius:1em;
--webkit-border-bottom-right-radius:0em;
--webkit-border-bottom-left-radius:0em;
--moz-border-radius-topleft:1em;
--moz-border-radius-topright:1em;
--moz-border-radius-bottomright:0em;
--moz-border-radius-bottomleft:0em;
-border-top-left-radius:1em;
-border-top-right-radius:1em;
-border-bottom-right-radius:0em;
-border-bottom-left-radius:0em;
-overflow: hidden;
+  -webkit-border-top-left-radius: 1em;
+  -webkit-border-top-right-radius: 1em;
+  -webkit-border-bottom-right-radius: 0em;
+  -webkit-border-bottom-left-radius: 0em;
+  -moz-border-radius-topleft: 1em;
+  -moz-border-radius-topright: 1em;
+  -moz-border-radius-bottomright: 0em;
+  -moz-border-radius-bottomleft: 0em;
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+  border-bottom-right-radius: 0em;
+  border-bottom-left-radius: 0em;
+  overflow: hidden;
   flex-direction: row;
   align-content: center;
   // height: 60px;
@@ -171,5 +194,10 @@ overflow: hidden;
       background: transparent;
     }
   }
+}
+.bb > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 </style>

@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from "axios";
+import {getmusicurl} from "@/api/music"
+
+
 
 axios.defaults.baseURL=process.env.VUE_APP_API_URL
 Vue.use(Vuex);
@@ -44,6 +47,10 @@ export default new Vuex.Store({
     setloading(context,value){
         context.commit('setloading',value)
     },
+
+    
+
+
 
     
    async songsfx(context,value){

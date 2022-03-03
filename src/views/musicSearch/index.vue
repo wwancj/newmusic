@@ -1,35 +1,27 @@
 <template>
-
-<el-autocomplete
-      class="inline-input"
-      v-model="musicname"
-      :fetch-suggestions="querySearch"
-      placeholder="请输入内容"
-      @keyup.enter="sear"
-    
-    >
-     <i
+  <el-autocomplete
+    class="inline-input"
+    v-model="musicname"
+    :fetch-suggestions="querySearch"
+    placeholder="请输入内容"
+    @keyup.enter="sear"
+  >
+    <i
       slot="prefix"
       class="el-input__icon el-icon-search"
       id="search"
       ref="search"
       @click="sear"
     ></i>
-    
-    </el-autocomplete>
-
-  
+  </el-autocomplete>
 </template>
 
 <script>
 export default {
-  
-  components: {
-    
-  },
+  components: {},
   data() {
     return {
-      searchlist:[],
+      searchlist: [],
       fullscreenLoading: false,
       musicname: "",
       musiclist: [],
@@ -39,48 +31,45 @@ export default {
   },
   name: "music",
   methods: {
- 
     querySearch(queryString, cb) {
-        // var restaurants = this.restaurants;
-        // var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
-        // 调用 callback 返回建议列表的数据
-        cb(this.searchlist);
-      },
+      cb(this.searchlist);
+    },
     sear() {
+      if (this.musicname != "") {
+        this.$store.dispatch("setloading", true);
+        this.musicidlist = [];
+        this.musiclist = [];
+        let that = this;
+        this.$axios
+          .get("/cloudsearch", {
+            params: {
+              keywords: this.musicname,
+            },
+          })
+          .then((data) => {
+            let a = 0;
+            let music = data.data.result.songs;
 
-      if(this.musicname!=''){
-            this.$store.dispatch("setloading",true)
-      this.musicidlist = [];
-      this.musiclist = [];
-      let that = this;
-      this.$axios
-        .get("/cloudsearch", {
-          params: {
-            keywords: this.musicname,
-          },
-        })
-        .then((data) => {
-          let a = 0;
-          let music = data.data.result.songs;
+            this.$store.dispatch("songsfx", music);
 
-          this.$store.dispatch("songsfx", music);
-
-           this.$store.dispatch("isstart","list")
-
-          
-        });
-      }else {
-          this.$notify({
+            this.$store.dispatch("isstart", "list");
+          },(error)=>{
+           this.$notify({
+              title: "警告",
+              message: "网络出现错误,请检查网络",
+              type: "warning",
+              position: "top-left",
+            });
+          })
+      } else {
+        this.$notify({
           // title: '自定义位置',
-          message: '内容不能为空',
-          position: 'top-left',
-          type:"warning"
+          message: "内容不能为空",
+          position: "top-left",
+          type: "warning",
         });
       }
-  
-
     },
-
   },
 
   watch: {
@@ -92,28 +81,29 @@ export default {
         }
       },
     },
-
   },
 
-  created(){
-    this.$axios.get("/search/hot").then((result)=>{
-      let hots=result.data.result.hots
+  created() {
+    this.$axios.get("/search/hot").then((result) => {
+      let hots = result.data.result.hots;
 
-      hots.forEach((item)=>{
-        this.searchlist.push({"value":item.first})
-      })
+      hots.forEach((item) => {
+        this.searchlist.push({ value: item.first });
+      });
       console.log(this.searchlist);
-      console.log("搜索热门推荐",result.data.result.hots);
-    })
+      console.log("搜索热门推荐", result.data.result.hots);
+    });
   },
-  mounted(){
-    let that=this
-    document.querySelector('input[placeholder="请输入内容"]').addEventListener("keydown",function(e){
-      if(e.key=="Enter"){
-        that.sear()
-      }
-    })
-  }
+  mounted() {
+    let that = this;
+    document
+      .querySelector('input[placeholder="请输入内容"]')
+      .addEventListener("keydown", function (e) {
+        if (e.key == "Enter") {
+          that.sear();
+        }
+      });
+  },
 };
 </script>
 
@@ -124,5 +114,4 @@ export default {
     cursor: pointer;
   }
 }
-
 </style>

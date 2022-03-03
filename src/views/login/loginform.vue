@@ -1,7 +1,11 @@
 <template>
 
-   <el-dialog title="登录选项" :visible.sync="dialogFormVisible">
-                    <el-form :model="form">
+
+<div class="login">
+
+
+  <el-empty description="登录后,体验更佳"></el-empty>
+  <el-form :model="form">
                       <el-form-item label="手机号/网易邮箱" label-width="120px">
                         <el-input
                           v-model="form.user"
@@ -26,14 +30,18 @@
                         >确 定</el-button
                       >
                     </div>
+</div>
+   
+                  
             
             
-            </el-dialog>
+       
      
 </template>
 <script>
 
-import {pwd_login,email_login} from '@/api/axios.js'
+import {pwd_login,email_login,islogin} from '@/api/axios.js'
+import { Message } from 'element-ui'
 export default {
 name:"loginform"
 ,
@@ -43,8 +51,10 @@ return {
      form: {
         name: "登录",
         user:"18379166922",
-        pws:"Wcj13755629453"
+        pws:"Wcj13755629453",
+        
       },
+      show:true
       
 }
 },
@@ -64,15 +74,34 @@ async login(){
 
       if(this.form.pws.length>=6){
        let res=await pwd_login(this.form.user,this.form.pws)
-            console.log(res,"333333333");
+            // console.log(res,"333333333");
 
       }
     }
-}
 },
-props:["dialogFormVisible"]
+async ilogin(){
+   const res= await islogin()
+   if(res?.data?.id!=""){
+    //  alert(12)
+    Message({
+      type:"success",
+      message:"欢迎回来"
+    })
+   }
+   this.$router.push('/list3/body/musicls')
+}
+
+},
+
+created(){
+  this.ilogin()
+}
+
 }
 </script>
 <style lang="less" scoped>
-
+  .login{
+    width: 70%;
+    margin: 0px auto;
+  }
 </style>

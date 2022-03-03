@@ -56,9 +56,9 @@
         </div>
         <div v-cloak></div>
       </div>
-      <a  target="_blank" class="github-btn" @click="ret">
+      <!-- <a  target="_blank" class="github-btn" @click="ret">
        返回
-      </a>
+      </a> -->
     </div>
 
     <svg xmlns="http://www.w3.org/2000/svg" hidden xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -375,11 +375,13 @@ min-height: 70%;
 
 .wrapper {
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
   // min-height: 100vh;
-  padding-top: 100px;
+  // padding-top: 100px;
+  // display: ;
+  position: relative;
   background-size: cover;
 }
 @media screen and (max-width: 700px), (max-height: 500px) {
@@ -392,11 +394,11 @@ min-height: 70%;
 .player {
   background: #eef3f7;
   width: 410px;
-  min-height: 480px;
+  // min-height: 480px;
   box-shadow: 0px 15px 35px -5px rgba(50, 88, 130, 0.32);
   border-radius: 15px;
   padding: 30px;
-  transform: translateY(-100px);
+  // transform: translateY(-100px);
 }
 @media screen and (max-width: 576px), (max-height: 500px) {
   .player {

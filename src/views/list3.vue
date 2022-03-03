@@ -31,6 +31,8 @@ top:0;"
 
 <script>
 export default {
+  name:"list3"
+  ,
   data () {
     return {
       

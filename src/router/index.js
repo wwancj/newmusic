@@ -3,77 +3,82 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 
 
-
-
 Vue.use(VueRouter);
 
 
 
-let mylist = {
-  path: "/mylist",
-  name: "mylist",
-  components: {
-    left: () => import("../views/mylist/myleft"),
-    right: () => import('../views/mylist/myright.vue'),
-    bfq: () => import("../views/bofangqi")
-  }
-}
 
-let body={
-  path: "/body",
-  name: "body",
-  redirect: "./list3",
-  component: () => import("../views/body"),
-  children: [{
-    path: "/bofangqi",
-    name: "bofangqi",
-    components: {
-      left: () => import('../views/left.vue'),
-      myleft: () => import('../views/mylist/myleft.vue'),
-      right: () => import("../views/bofangqi")
-    }
-  }
 
-    , {
-    path: "/list3",
-    name: "list3",
-    components: {
-      right: () => import('../views/list3.vue'),
-      left: () => import("../views/left.vue"),
-      bfq: () => import("../views/bofangqi")
-    }
-  },
-    mylist
+// let body={
+//   path: "/body",
+//   name: "body",
+//   component: () => import("../views/body"),
+//   redirect: "./list3",
+//   children: [
+//     {
+//     path: "/list3",
+//     name: "list3",
+//     // redirect:"/list3/list",
+//     children:[
+//       {
+//         path:"bofangqi",
+//         name: "bofangqi",
+//         component:()=>import("../views/bofangqi")
+//       },
+//       {
+//         path:"list",
+//         component:()=>import("views/list3")
+//       }
+//     ]
+//   },
 
-  ]
 
-}
+//   ]
 
-let body1={
-    path:"/body2",
-    name:"body2",
-    component:()=>import("@/views/body2/body2")
-}
+// }
+
+// let body1={
+//     path:"/body2",
+//     name:"body2",
+//     component:()=>import("@/views/body2/body2")
+// }
 
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home,
-    redirect: "./body",
-    children: [body,body1]
-
+    redirect: "./list3",
   }
-  , 
+,
+  // {
+  //   path: "/body",
+  // name: "body",
+  // component: () => import("../views/body"),
+  // redirect: "./list3"
+  // },
   {
-    path: "/userinfo",
-    name: "userinfo",
-    component: () => import("../views/userinfo")
-  },
-  {
-    path: "/pinglun",
-    name: "pinglun",
-    component: () => import('../views/pinglun')
+     path:"/list3",
+     component: () => import("../views/Home"),
+     redirect:"/list3/body",
+     children:[
+     {
+         path:"body",
+         component:()=>import("views/body"),
+         
+         children:[
+           //这里配置主要内容
+           {
+             path:"musicls",
+             component:()=>import("views/list3")
+           }
+           ,{
+             path:"login",
+             component:()=>import("views/login/loginform")
+           }
+         ]
+       }
+     ]
   }
 ];
 

@@ -1,21 +1,26 @@
 <template>
   <div class="aa">
+   
     <canvas id="particle-canvas" ></canvas>
     <div id="con" >
-      <myNav ></myNav>
-
+      <myNav></myNav>
+      <el-divider></el-divider>
       <router-view></router-view>
+      <!-- <mybody></mybody> -->
     </div>
   </div>
 </template>
 
 <script>
+
 import myNav from "views/nav/nav";
 import musicSearch from "./musicSearch";
 import bangdan from "./bangdan.vue";
 import { animation } from "./body2/index.js";
 import loginform from "./login/loginform.vue";
-export default {
+
+import mybody from "./body.vue"
+ export default {
   data() {
     return {
       input4: "",
@@ -90,6 +95,11 @@ export default {
   vertical-align: middle;
 }
 //nav 激活时的样式
+.el-divider {
+margin: 0 0;
+background: rgba(113 119 144 / 25%);
+
+}
 .heig {
   //  background-color: #242424;
   height: 100%;
@@ -132,19 +142,13 @@ export default {
 
       // backdrop-filter: blur(20px);
     background-color: var(--theme-bg-color);
-   background: rgba(255, 255, 255, .04);
+     backdrop-filter: blur(20px);
+  //  background: rgba(255, 255, 255, .1);
     box-shadow: 3px 3px 6px 3px rgba(0, 0, 0, .3);
 
  
   }
-  #con::before{
-    //  content: '';
-    // position: absolute;
-    // top: 0; bottom: 0;
-    // left: 0; right: 0;
-    // filter: blur(20px);
-    // z-index: -1;
-  }
+
   .na {
     // background-color: #545c63;
     // border-bottom: 4px #c20c0c solid;
