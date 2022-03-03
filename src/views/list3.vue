@@ -1,5 +1,6 @@
 <template>
-  <el-table :data="$store.state.musics"
+<div class="listl">
+<el-table :data="$store.state.musics"
    style="width: 100%;min-height:500px;position: relative;
 top:0;"
      v-loading="$store.state.loading"
@@ -22,6 +23,10 @@ top:0;"
       </template>
     </el-table-column>
   </el-table>
+
+</div>
+ 
+ 
 </template>
 
 <script>
@@ -46,6 +51,9 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped lang="less">
+ .listl{
+   height: 500px;
+   overflow: scroll;
+ }
 </style>

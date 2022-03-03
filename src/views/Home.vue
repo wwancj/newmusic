@@ -1,82 +1,8 @@
 <template>
   <div class="aa">
-    <canvas id="particle-canvas"></canvas>
-    <div id="con">
-      <div class="na">
-        <div class="nav row">
-          <div class="col-sm-2 row">
-            <img
-              src="https://cn.vitejs.dev/logo.svg"
-              alt=""
-              width="50px"
-              height="50px"
-              class="col-sm-4"
-            />
-            <div class="col-sm-8" style="font-size: 30px; color: #fff">
-              vite
-            </div>
-          </div>
-          <div class="col-sm-5 mynav">
-            <div class="rowe">
-              <div class="col-sm-2 ff">发现音乐</div>
-              <div class="col-sm-2 ff">
-                <router-link
-                  :to="{ path: '/mylist' }"
-                  tag="div"
-                  active-class="heig"
-                  >我的音乐</router-link
-                >
-              </div>
-              <div class="col-sm-2 ff">歌手</div>
-              <div class="col-sm-2 ff">歌单</div>
-              <div class="col-sm-2 ff">排行</div>
-            </div>
-          </div>
-          <div class="col-sm-3 nav_c">
-            <musicSearch></musicSearch>
-          </div>
-
-          <div class="col-sm-2 row userlogin">
-            <div class="row_3">
-              <img
-                src="https://cn.vitejs.dev/logo.svg"
-                alt=""
-                width="40px"
-                height="40px"
-              />
-
-              <div class="dropdown">
-                <el-dropdown>
-                  <el-button type="primary">
-                    登录选项<i class="el-icon-arrow-down el-icon--right"></i>
-                  </el-button>
-                  <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>
-                      <div @click="textlogin">检查登录</div>
-                    </el-dropdown-item>
-                    <el-dropdown-item>
-                      <!-- <router-link to="/login">
-                  登录
-                  </router-link> -->
-                      <el-button type="text" @click="dialogFormVisible = true"
-                        >立即登录</el-button
-                      >
-                    </el-dropdown-item>
-
-                    <el-dropdown-item>
-                      <div @click="outlogin">退出登录</div>
-                    </el-dropdown-item>
-                  </el-dropdown-menu>
-                </el-dropdown>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <loginform
-        :dialogFormVisible="dialogFormVisible"
-        @guanbi="loginfromshow"
-      ></loginform>
+    <canvas id="particle-canvas" ></canvas>
+    <div id="con" >
+      <myNav ></myNav>
 
       <router-view></router-view>
     </div>
@@ -84,6 +10,7 @@
 </template>
 
 <script>
+import myNav from "views/nav/nav";
 import musicSearch from "./musicSearch";
 import bangdan from "./bangdan.vue";
 import { animation } from "./body2/index.js";
@@ -96,7 +23,7 @@ export default {
     };
   },
   name: "Home",
-  components: { musicSearch, bangdan, loginform },
+  components: { musicSearch, bangdan, loginform, myNav },
   methods: {
     textlogin() {
       this.$axios.get("/user/account").then((data) => {
@@ -149,13 +76,17 @@ export default {
 
 
 <style lang="less" scoped>
-// @import url("https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css");
 
 
 #particle-canvas {
   width: 100%;
   height: 100vh;
-  background: linear-gradient(to bottom, rgb(10, 10, 50) 0%,rgb(60, 10, 60) 100%);
+  // background: linear-gradient(
+  //   to bottom,
+  //   rgb(10, 10, 50) 0%,
+  //   rgb(60, 10, 60) 100%
+  // );
+  // background-image: url('@/assets/back.jpg');
   vertical-align: middle;
 }
 //nav 激活时的样式
@@ -179,33 +110,51 @@ export default {
   // height: 55px;
   position: relative;
   top: 0;
-  line-height: 55px;
+  // line-height: 55px;
 
-#con{
-  width: 85vw;
-  position:absolute;
-   left: 50%;
+  #con {
+    -moz-box-shadow: -3px -5px 10px #f0fffb;
+    -webkit-box-shadow: -3px -5px 10px #f0fffb;
+    box-shadow: -3px -5px 10px #f0fffb;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    border-bottom-right-radius: 0em;
+    border-bottom-left-radius: 0em;
+    width: 85vw;
+    position: absolute;
+    left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%);
-  // margin-left:100px;
-  div{
-    //  backdrop-filter: blur(14px) saturate(150%);
-    // background-color:rgba(255,255,255,0.15)
-    //  color: rgba(red, green, blue, 1.0);
+    transform: translate(-50%, -50%);
+    height: 90vh;
+    overflow: hidden;
+    margin-top: 10px;
+    // margin-left:100px;
+
+      // backdrop-filter: blur(20px);
+    background-color: var(--theme-bg-color);
+   background: rgba(255, 255, 255, .04);
+    box-shadow: 3px 3px 6px 3px rgba(0, 0, 0, .3);
+
+ 
   }
-  
-}
+  #con::before{
+    //  content: '';
+    // position: absolute;
+    // top: 0; bottom: 0;
+    // left: 0; right: 0;
+    // filter: blur(20px);
+    // z-index: -1;
+  }
   .na {
     // background-color: #545c63;
     // border-bottom: 4px #c20c0c solid;
     color: #000;
 
     //  backdrop-filter: blur(14px) saturate(150%);
-    background-color:rgba(255,255,255,0.15)
+    // background-color: rgba(255, 255, 255, 0.15);
   }
 }
 .mynav {
-  
   div {
     text-align: center;
     //  backdrop-filter: blur(14px) saturate(150%);
@@ -213,10 +162,6 @@ export default {
   }
   //  backdrop-filter: blur(14px) saturate(150%);
   //   background-color:rgba(255,255,255,0.15)
-
-
-    
-
 }
 .nav_c {
   display: flex;

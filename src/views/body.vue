@@ -1,5 +1,5 @@
 <template>
-  <el-row :gutter="20">
+  <el-row >
     <el-col :span="5">
       <div class="grid-content bg-purple">
         <el-button type="primary" @click="dialogTableVisible = true"
@@ -132,17 +132,13 @@ export default {
   align-items: center;
 }
 .bg-purple {
-  // background-color: #778ba6;
- backdrop-filter: blur(14px) saturate(150%);
- background-color:rgba(255,255,255,0.15);
-  border-radius: 4px;
-  margin-top: 20px;
-  // box-shadow: 2px 2px 13px #333333;
+  
+ 
   padding: 0 10px;
 
   min-height: 90vh;
-  position: relative;
-  top: 0;
+  // position: relative;
+  // top: 0;
 }
 
 .right-enter,.right-leave-to{

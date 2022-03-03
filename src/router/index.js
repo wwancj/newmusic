@@ -64,11 +64,7 @@ const routes = [
     children: [body,body1]
 
   }
-  , {
-    path: "/login",
-    name: "login",
-    component: () => import("../views/login")
-  },
+  , 
   {
     path: "/userinfo",
     name: "userinfo",

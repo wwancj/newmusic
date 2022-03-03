@@ -11,6 +11,7 @@ module.exports = {
             .set('@', resolve('./src'))//根据目录的层级来决定，也可以自行设
             // .set('components',resolve('./src/components'))
             .set('views', resolve('./src/views'))
+            .set("public",resolve('./public'))
         // .set('assets',resolve('./src/assets'))
     },
     devServer: {
