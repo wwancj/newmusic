@@ -12,15 +12,20 @@ export default new Vuex.Store({
   state: {
     musiclist:[],
     musicids:[],
-    num:1111111111111,
+    // num:1111111111111,
+
+    //搜索结果
     songs:[],
-  
     musics:[],
     //全局 音乐索引
     cindex:0,
-    isstart:"list",
+  
     //加载动画
-    loading:false
+    loading:false,
+    isplay:false,
+    currentTrack:null,
+    currentTime:null
+
   },
   actions: {
     findmusic(context,value){
@@ -35,6 +40,7 @@ export default new Vuex.Store({
     muiscs(context,value){
       context.commit("musics",value)
     },
+    //
     currentIndex(context,value){
       context.commit("currentIndex",value)
     },
@@ -54,24 +60,15 @@ export default new Vuex.Store({
 
     
    async songsfx(context,value){
-      let arr=[]            
-      for(let item of value){
-         let {name,id,al:{picUrl},ar:[ar]}=item               
-         arr.push({name,id,"cover":picUrl,"artist":ar.name})
-      }
-      for(let item of arr){
-      await axios.get("/song/url",{params:{
-          id:item.id
-        }}).then((data)=>{
-          let [{url}]=data.data.data
-          item.source=url
-          item.url=""
-          item.favorited=false
-        })
-     }
-     console.log(arr,"song分析器111111111111111111111111");
-     context.commit("musics",arr)
-     context.commit("setloading",false)
+     // 解构数据
+    //  let arr=[]
+    context.commit("musics_init")
+     for(let item of value){
+           let {name,id,al:{picUrl},ar:[ar],mv}=item                          
+           let url=await getmusicurl(id)           
+          //  arr.push({name,id,"cover":picUrl,"artist":ar.name,"source":url,mv})        
+           context.commit("musics",{name,id,"cover":picUrl,"artist":ar.name,"source":url,mv})
+        }
     }
      
 
@@ -80,9 +77,8 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    baocunmusic(state,value){
-        state.musiclist=value
-    },
+    currentTrack(state,val){state.currentTrack=val},
+    currentTime(state,val){state.currentTime=val},
   
     MIDS(state,value){
    state.musicids=value
@@ -92,16 +88,22 @@ export default new Vuex.Store({
       state.songs=value
     },
     musics(state,value){
-     state.musics=value
+     state.musics.push(value)
     },
     currentIndex(state,value){
      state.cindex=value
     },
-    isstart(state,value){
-      state.isstart=value
-    },
+ 
     setloading(state,value){
       state.loading=value
+    },
+    musics_init(state){
+      state.musics=[]
+    },
+
+    //全局音乐开关
+    isplay(){
+
     }
   },
 

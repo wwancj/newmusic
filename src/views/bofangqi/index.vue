@@ -2,7 +2,7 @@
 
   <div id="bofangq">
    
-      <div class="wrapper" id="app">
+      <div class="wrapper">
       <div class="player" ref="player">
         <div class="player__top">
           <div class="player-cover">
@@ -113,11 +113,13 @@
     </svg>
      <!-- {{ $store.state.musiclist}} -->
 
-    
+       <el-button type="primary" @click="getly">主要按钮</el-button>
   </div>
 </template>
 
 <script>
+import {getlyric} from '@/api/music'
+import {lrc2Json} from "@/layout/lyric_json"
 export default {
   name:"bofangqi",
  data() {
@@ -141,10 +143,16 @@ export default {
       ],
       currentTrack: null,
       currentTrackIndex: 0,
-      transitionName: null
+      transitionName: null,
+      //歌词时间
+      lytime:0
     };
   },
   methods: {
+  async getly(){
+   let red = await getlyric(this.currentTrack.id)
+  //  console.log(lrc2Json(red),"个体ddd");
+    },
     play() {
       if (this.audio.paused) {
         this.audio.play();
@@ -154,12 +162,12 @@ export default {
         this.isTimerPlaying = false;
       }
     },
-    ret(){
-      // this.$router.back(-1)
-      this.$store.dispatch('isstart','list')
-      this.audio.pause();
-        this.isTimerPlaying = false;
-    },
+    // ret(){
+    //   // this.$router.back(-1)
+    //   this.$store.dispatch('isstart','list')
+    //   this.audio.pause();
+    //     this.isTimerPlaying = false;
+    // },
     generateTime() {
       let width = (100 / this.audio.duration) * this.audio.currentTime;
       this.barWidth = width + "%";
@@ -180,6 +188,8 @@ export default {
       if (cursec < 10) {
         cursec = "0" + cursec;
       }
+
+      this.lytime=this.audio.currentTime
       this.duration = durmin + ":" + dursec;
       this.currentTime = curmin + ":" + cursec;
     },
@@ -214,6 +224,7 @@ export default {
       // console.log("点击位置",e.pageX)
       this.updateBar(e.pageX);
     },
+    //上一首
     prevTrack() {
       this.transitionName = "scale-in";
       this.isShowCover = false;
@@ -225,8 +236,9 @@ export default {
       this.currentTrack = this.tracks[this.currentTrackIndex];
       this.resetPlayer();
     },
+    //下一首
     nextTrack() {
-      console.log(this.$store.state.musics[4],999999999999);
+     
       this.transitionName = "scale-out";
       this.isShowCover = false;
       if (this.currentTrackIndex < this.tracks.length - 1) {
@@ -267,14 +279,14 @@ export default {
           favorited: false
         }]
         this.currentTrack = this.tracks[0];
-        // this.audio.src = this.tracks[0].source;
+
     }else{
       this.tracks=this.$store.state.musics //musics
       console.log(this.$store.state.cindex,"index");
       this.currentTrackIndex=this.$store.state.cindex
       this.currentTrack=this.$store.state.musics[this.$store.state.cindex]
       
-      //  this.audio.src = this.$store.state.musics[this.$store.state.cindex].source;
+
       }
      
     let vm = this;
@@ -316,15 +328,17 @@ export default {
   watch:{
      '$store.state.musics':function(newVal){ // plan1.0
      
-    console.log(JSON.parse(JSON.stringify(newVal[0])),"rrrrrrrrrrrrrrrrr");
             if(newVal){
-            
-               console.log(this.tracks[0].cover,999999999999);
-             
-                 this.tracks=this.$store.state.musics 
+                      
+      this.tracks=this.$store.state.musics 
+
       console.log(this.$store.state.cindex,"index");
+
       this.currentTrackIndex=this.$store.state.cindex
+      
       this.currentTrack=this.$store.state.musics[this.$store.state.cindex]
+
+      //初始化音乐
       this.audio.src = newVal[0].source
       // console.log(newVal[0].source,"rrrrrrrrrrrrrrrrr");
      
@@ -334,15 +348,36 @@ export default {
 
        '$store.state.cindex':function(newVal){ // plan1.0
             if(newVal){            
-              console.log(newVal,"cid");
-          this.tracks=this.$store.state.musics //musics
-      this.currentTrackIndex=this.$store.state.cindex
-      this.currentTrack=this.$store.state.musics[newVal]
+
+       this.tracks=this.$store.state.musics //musics
+       this.currentTrackIndex=this.$store.state.cindex
+       this.currentTrack=this.$store.state.musics[newVal]
        this.audio.src = this.$store.state.musics[newVal].source;
       
             }
             
-        } 
+        } ,
+
+        //正在播放的音乐 监听
+        'currentTrack':function(newval){
+          if(newval){
+           this.$store.commit('currentTrack',newval)
+          }
+         
+
+        },
+        //正在播放的音乐 时间 监听
+        "lytime":function(newval){
+             if(newval){
+
+              //  let mm=parseInt(newval.substring(0,2)*60*1000)+parseInt(newval.substring(3,5))*1000
+              //  console.log(mm)
+              newval=Math.floor(newval*1000)
+             this.$store.commit('currentTime', newval)
+          }
+          }
+
+        
 
        
   }
@@ -358,12 +393,12 @@ export default {
 
 #bofangq{
 
-
-position: absolute;
-top:50px;
-left: 50%;
-transform: translateX(-50%);
-min-height: 70%;
+// background: url(require());
+// position: absolute;
+// top:50px;
+// left: 50%;
+// transform: translateX(-30%);
+// min-height: 70%;
 .icon {
   display: inline-block;
   width: 1em;
@@ -374,16 +409,12 @@ min-height: 70%;
 }
 
 .wrapper {
-  width: 100%;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-  // min-height: 100vh;
-  // padding-top: 100px;
-  // display: ;
   position: relative;
   background-size: cover;
 }
+
+
+
 @media screen and (max-width: 700px), (max-height: 500px) {
   .wrapper {
     flex-wrap: wrap;
@@ -393,9 +424,9 @@ min-height: 70%;
 
 .player {
   background: #eef3f7;
-  width: 410px;
+  width: 400px;
   // min-height: 480px;
-  box-shadow: 0px 15px 35px -5px rgba(50, 88, 130, 0.32);
+  // box-shadow: 0px 15px 35px -5px rgba(50, 88, 130, 0.32);
   border-radius: 15px;
   padding: 30px;
   // transform: translateY(-100px);
@@ -457,7 +488,7 @@ min-height: 70%;
   background: inherit;
   width: 100%;
   height: 100%;
-  box-shadow: 0px 10px 40px 0px rgba(76, 70, 124, 0.5);
+  // box-shadow: 0px 10px 40px 0px rgba(76, 70, 124, 0.5);
   display: block;
   z-index: 1;
   position: absolute;

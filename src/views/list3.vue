@@ -1,61 +1,142 @@
 <template>
-<div class="listl">
-<el-table :data="$store.state.musics"
-   style="width: 100%;min-height:500px;position: relative;
-top:0;"
-     v-loading="$store.state.loading"
-    element-loading-text="拼命加载中"
-    element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)"
-   >
-    <el-table-column prop="name" label="歌曲" width="180" @click="te(name)">
-    </el-table-column>
-    <el-table-column prop="artist" label="歌手" width="180"> </el-table-column>
-    <el-table-column prop="id" label="歌曲id"> </el-table-column>
-    <el-table-column label="操作">
-      <template slot-scope="scope">
-        <el-button
-          size="mini"
-          type="danger"
-          @click="handleEdit(scope.$index, scope.row)"
-          >播放</el-button
-        >
-      </template>
-    </el-table-column>
-  </el-table>
+  <div class="listl">
+    <div id="fle">--------------</div>
+    <div id="bt">
+      最新歌曲
+      <div class="content">
 
-</div>
- 
- 
+        <transition-group>
+          <div v-for="(item,index) in $store.state.musics" :key="item.id" class="ll">
+            <el-row >
+
+          <el-col :span="5"><div class="mname">{{item.name}}</div></el-col>
+          <el-col :span="5"><div class="mname">{{item.artist}}</div></el-col>
+          <el-col :span="9">
+          <div v-if="item.mv!='0'"><i class="el-icon-video-camera-solid"></i></div>
+          <div v-else-if="item.mv=='0'"><i class="el-icon-error"></i></div>
+          </el-col>
+          <el-col :span="5"><div class="play"   @click="handleEdit(index)"><i class="el-icon-video-play" ></i></div></el-col>
+        </el-row>
+        </div></transition-group>
+        
+      
+      </div>
+    </div>
+
+  </div>
 </template>
 
 <script>
 export default {
-  name:"list3"
-  ,
-  data () {
-    return {
-      
-    }
+  name: "list3",
+  data() {
+    return {};
   },
   methods: {
-    handleEdit(index, row) {
-      console.log(index,"dddddddd");
-      this.$store.dispatch("currentIndex", index);
+    handleEdit(index ) {
 
-      this.$store.dispatch("isstart","bfq")
-      // this.$router.push({ path: "/bofangqi" });
-      console.log(this.$route.path);
+  
+
+      this.$store.dispatch("currentIndex", index);
+      // this.$store.dispatch("isstart", "bfq");
+      // this.$router.push("/list3/body/play");
+      // console.log(this.$route.path);
       // console.log(this.$store.state.isstart,"11111111111111star");
     },
-    
+   
   },
 };
 </script>
 
 <style scoped lang="less">
- .listl{
-   height: 500px;
-   overflow: scroll;
- }
+.play{
+  font-size: 2rem;
+}
+.mname{
+  padding-left: 10px;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+white-space: nowrap;
+  // overflow: hidden;
+}
+.ll{
+  height: 40px;
+  line-height: 40px;
+}
+#bt {
+  height: 600px;
+  overflow: scroll
+}
+#fle {
+  position: relative;
+  top: 0px;
+}
+.content {
+  width: 100%;
+  height: 400px;
+
+  background-color: rgba(118, 120, 121, 0.25);
+color: rgb(125, 145, 161);
+font-weight:100;
+-webkit-border-top-left-radius:5px;
+-webkit-border-top-right-radius:5px;
+-webkit-border-bottom-right-radius:5px;
+-webkit-border-bottom-left-radius:5px;
+-moz-border-radius-topleft:5px;
+-moz-border-radius-topright:5px;
+-moz-border-radius-bottomright:5px;
+-moz-border-radius-bottomleft:5px;
+border-top-left-radius:5px;
+border-top-right-radius:5px;
+border-bottom-right-radius:5px;
+border-bottom-left-radius:5px;
+  overflow: scroll;
+  &>span>div:hover{
+    background-color: rgba(14, 69, 97, 0.25);
+  }
+}
+// .content::after {
+//   content: ""; /* 添加内容 */
+//   clear: both; /* 清楚两侧浮动 */
+//   display: block; /* 转换元素类型为块元素 */
+//   height: 890px;
+//   overflow: hidden; /* 溢出隐藏属性 */
+//   visibility: hidden; /* 隐藏属性 */
+// }
+.listl {
+  height: 700px;
+  // overflow: scroll;
+  position: relative;
+  padding: 20px;
+}
+
+.v-enter {
+  position: relative;
+  top: 0;
+  left: 100%;
+
+  /* transform: translateX(100%); */
+}
+.v-enter-to {
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+.v-enter-active {
+  transition: left 0.7s;
+}
+.v-leave {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.v-leave-to {
+  position: relative;
+  top: 0;
+  left: -100%;
+}
+.v-leave-active {
+  transition: left 0.7s;
+}
 </style>

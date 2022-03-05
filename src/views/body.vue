@@ -16,21 +16,6 @@
     <el-col :span="20">
       <div class="grid-content bg-purple" >
         <div style="padding: 10px 20px"></div>
-          
-  
-        <!-- <transition name="right">
-          <router-view name="right" v-show="$store.state.isstart == 'list'">
-        </router-view>
-        </transition>
-        
-
-        <transition name="bfq">
-          <router-view name="bfq" v-show="$store.state.isstart == 'bfq'">
-          </router-view>
-        </transition> -->
-
-
-
        <router-view >
           </router-view>
         
@@ -40,7 +25,7 @@
 </template>
 
 <script>
-// import musicSearch from "./music/index.vue";
+
 import {islogin} from "@/api/axios.js"
 import bangdan from "./bangdan.vue";
 import myleft from "./left.vue";
@@ -48,45 +33,19 @@ export default {
   // name:"body"
   data() {
     return {
-      dialogTableVisible: false,
-      value2: false,
-      activeNames:["1"],
-      count:6
+    
+ 
     };
   },
   methods:{
-    load(){
-      if(this.count<this.$store.state.musics.length){
-        if(this.$store.state.musics.length%2==0){
-          console.log(this.$store.state.musics.length);
-             this.count+=2
-        }else{
-          this.count+=1
-        }
-        
-      }
-      
-    },
-    showlist(){
-     if(this.$store.state.musics.length>=6){
-        this.count=6
-    }else if(this.$store.state.musics.length<6){
-        this.count=this.$store.state.musics.length
-    }
-    },
    async checklogin(){
      let data= await islogin()
-     console.log(data,888888);
+    
     }
-
-
-  
   },
   components: { bangdan,myleft },
   created(){
-    if(this.$store.state.musics.length<=this.count){
-        this.count=this.$store.state.musics.length
-    }
+
     
    this.checklogin()
    

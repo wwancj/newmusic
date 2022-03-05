@@ -4,7 +4,7 @@
     v-model="musicname"
     :fetch-suggestions="querySearch"
     placeholder="请输入内容"
-    @keyup.enter="sear"
+   
   >
     <i
       slot="prefix"
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+
+import {cloudsearch} from "@/api/music.js"
 export default {
   components: {},
   data() {
@@ -34,42 +36,48 @@ export default {
     querySearch(queryString, cb) {
       cb(this.searchlist);
     },
-    sear() {
-      if (this.musicname != "") {
-        this.$store.dispatch("setloading", true);
-        this.musicidlist = [];
-        this.musiclist = [];
-        let that = this;
-        this.$axios
-          .get("/cloudsearch", {
-            params: {
-              keywords: this.musicname,
-            },
-          })
-          .then((data) => {
-            let a = 0;
-            let music = data.data.result.songs;
+    async sear() {
+      // alert(1223)
+    let data= await cloudsearch(this.musicname)
+    this.$store.dispatch("songsfx", data);
+      // if (this.musicname != "") {
+      //   this.$store.dispatch("setloading", true);
+      //   this.musicidlist = [];
+      //   this.musiclist = [];
+      //   let that = this;
+      //   this.$axios
+      //     .get("/cloudsearch", {
+      //       params: {
+      //         keywords: this.musicname,
+      //       },
+      //     })
+      //     .then((data) => {
+      //       let a = 0;
+      //       let music = data.data.result.songs;
 
-            this.$store.dispatch("songsfx", music);
+      //       this.$store.dispatch("songsfx", music);
 
-            this.$store.dispatch("isstart", "list");
-          },(error)=>{
-           this.$notify({
-              title: "警告",
-              message: "网络出现错误,请检查网络",
-              type: "warning",
-              position: "top-left",
-            });
-          })
-      } else {
-        this.$notify({
-          // title: '自定义位置',
-          message: "内容不能为空",
-          position: "top-left",
-          type: "warning",
-        });
-      }
+      //       this.$store.dispatch("isstart", "list");
+      //     },(error)=>{
+      //      this.$notify({
+      //         title: "警告",
+      //         message: "网络出现错误,请检查网络",
+      //         type: "warning",
+      //         position: "top-left",
+      //       });
+      //     })
+      // } else {
+      //   this.$notify({
+      //     // title: '自定义位置',
+      //     message: "内容不能为空",
+      //     position: "top-left",
+      //     type: "warning",
+      //   });
+      // }
+
+
     },
+    //
   },
 
   watch: {
@@ -93,17 +101,30 @@ export default {
       console.log(this.searchlist);
       console.log("搜索热门推荐", result.data.result.hots);
     });
+
+
+
+
   },
   mounted() {
     let that = this;
     document
       .querySelector('input[placeholder="请输入内容"]')
       .addEventListener("keydown", function (e) {
+     
         if (e.key == "Enter") {
           that.sear();
         }
       });
+
+      let input=document.querySelector(".el-input__inner")
+      input.style.backgroundColor="rgba(16 18 27 / 40%) "
+      input.style.outline="none"
+      input.style.border="none"
   },
+
+
+    
 };
 </script>
 
@@ -113,5 +134,10 @@ export default {
   #search {
     cursor: pointer;
   }
+}
+
+
+.el-input__inner{
+  background-color:rgba(16 18 27 / 40%) ;
 }
 </style>

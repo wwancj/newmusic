@@ -13,8 +13,6 @@
     },
     methods: {
          star(i,index){
-            //  alert("111")
-
              let ii=[i]
              console.log(this.musics,"1111111")
              console.log(ii,"222222222222222222");

@@ -4,45 +4,6 @@ import Home from '../views/Home.vue';
 
 
 Vue.use(VueRouter);
-
-
-
-
-
-// let body={
-//   path: "/body",
-//   name: "body",
-//   component: () => import("../views/body"),
-//   redirect: "./list3",
-//   children: [
-//     {
-//     path: "/list3",
-//     name: "list3",
-//     // redirect:"/list3/list",
-//     children:[
-//       {
-//         path:"bofangqi",
-//         name: "bofangqi",
-//         component:()=>import("../views/bofangqi")
-//       },
-//       {
-//         path:"list",
-//         component:()=>import("views/list3")
-//       }
-//     ]
-//   },
-
-
-//   ]
-
-// }
-
-// let body1={
-//     path:"/body2",
-//     name:"body2",
-//     component:()=>import("@/views/body2/body2")
-// }
-
 const routes = [
   {
     path: '/',
@@ -65,7 +26,7 @@ const routes = [
      {
          path:"body",
          component:()=>import("views/body"),
-         
+         redirect:"/list3/body/musicls",
          children:[
            //这里配置主要内容
            {
@@ -75,7 +36,11 @@ const routes = [
            ,{
              path:"login",
              component:()=>import("views/login/loginform")
-           }
+           },
+          //  {
+          //    path:"play",
+          //    component:()=>import("views/bofangqi")
+          //  }
          ]
        }
      ]

@@ -119,7 +119,7 @@ export default {
 
         }else {
           this.user=data.data.profile
-              this.firsttime = this.time(data.data.profile.createTime) || "";
+          this.firsttime = this.time(data.data.profile.createTime) || "";
           this.birthday = this.time(data.data.profile.birthday) || "";
           this.lasttime = this.time(data.data.profile.lastLoginTime) || "";
         }
@@ -180,7 +180,7 @@ export default {
           
            this.$store.dispatch('songsfx',data.data.songs)
 
-             this.$router.push({ path: "/list3" });
+            //  this.$router.push({ path: "/list3" });
              
          })
     },

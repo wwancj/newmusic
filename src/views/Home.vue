@@ -1,8 +1,23 @@
 <template>
   <div class="aa">
-   
-    <canvas id="particle-canvas" ></canvas>
-    <div id="con" >
+     <!-- 下拉框 开关 -->
+    <div id="contor" @click="drawer = true">
+      <div class="i">
+        <i class="el-icon-arrow-down"> </i>
+      </div>
+    </div>
+
+    <el-drawer
+      title=""
+      :visible.sync="drawer"
+      direction="ttb"
+      size="100%"
+    >
+     <taskbar></taskbar>
+    </el-drawer>
+
+    <canvas id="particle-canvas"></canvas>
+    <div id="con">
       <myNav></myNav>
       <el-divider></el-divider>
       <router-view></router-view>
@@ -12,23 +27,25 @@
 </template>
 
 <script>
-
 import myNav from "views/nav/nav";
-import musicSearch from "./musicSearch";
+// import musicSearch from "./musicSearch";
 import bangdan from "./bangdan.vue";
 import { animation } from "./body2/index.js";
 import loginform from "./login/loginform.vue";
 
-import mybody from "./body.vue"
- export default {
+import bofangqi from 'views/bofangqi'
+import mybody from "./body.vue";
+import taskbar from "@/components/Taskbar/taskbar"
+export default {
   data() {
     return {
       input4: "",
-      dialogFormVisible: false,
+      drawer: false,
+      innerDrawer: false,
     };
   },
   name: "Home",
-  components: { musicSearch, bangdan, loginform, myNav },
+  components: { taskbar, bangdan, loginform, myNav,bofangqi},
   methods: {
     textlogin() {
       this.$axios.get("/user/account").then((data) => {
@@ -65,6 +82,13 @@ import mybody from "./body.vue"
     loginfromshow(res) {
       this.dialogFormVisible = res;
     },
+    handleClose(done) {
+      this.$confirm("还有未保存的工作哦确定关闭吗？")
+        .then((_) => {
+          done();
+        })
+        .catch((_) => {});
+    },
   },
   created() {
     this.$axios.get("/user/account").then((data) => {
@@ -81,24 +105,49 @@ import mybody from "./body.vue"
 
 
 <style lang="less" scoped>
+@keyframes imove {
+  0% {
+    top: 0px;
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+.i {
+  font-size: 50px;
+  text-align: center;
 
+  animation: imove linear 1s infinite;
+}
+#contor {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  height: 50px;
+  width: 120px;
+  background-color: #84869b;
+  border-top-left-radius: 0em;
+  border-top-right-radius: 0em;
+  border-bottom-right-radius: 9px;
+  border-bottom-left-radius: 9px;
+  padding-bottom: 10px;
+}
 
 #particle-canvas {
   width: 100%;
   height: 100vh;
-  // background: linear-gradient(
-  //   to bottom,
-  //   rgb(10, 10, 50) 0%,
-  //   rgb(60, 10, 60) 100%
-  // );
-  // background-image: url('@/assets/back.jpg');
+
   vertical-align: middle;
 }
 //nav 激活时的样式
 .el-divider {
-margin: 0 0;
-background: rgba(113 119 144 / 25%);
-
+  margin: 0 0;
+  background: rgba(113 119 144 / 25%);
 }
 .heig {
   //  background-color: #242424;
@@ -140,13 +189,11 @@ background: rgba(113 119 144 / 25%);
     margin-top: 10px;
     // margin-left:100px;
 
-      // backdrop-filter: blur(20px);
+    // backdrop-filter: blur(20px);
     background-color: var(--theme-bg-color);
-     backdrop-filter: blur(20px);
-  //  background: rgba(255, 255, 255, .1);
-    box-shadow: 3px 3px 6px 3px rgba(0, 0, 0, .3);
-
- 
+    backdrop-filter: blur(20px);
+    //  background: rgba(255, 255, 255, .1);
+    box-shadow: 3px 3px 6px 3px rgba(0, 0, 0, 0.3);
   }
 
   .na {

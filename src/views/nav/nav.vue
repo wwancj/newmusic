@@ -5,7 +5,7 @@
     <el-row>
       <el-col :span="4">
         <div class="icon">
-          <i class="el-icon-arrow-left" style="color: aliceblue"></i>
+          <i class="el-icon-arrow-left" style="color: aliceblue" @click="back"></i>
           <i class="el-icon-arrow-right" style="color: aliceblue"></i>
           <i class="el-icon-refresh-right" style="color: aliceblue"></i>
         </div>
@@ -23,18 +23,16 @@
             <el-col :span="2">
               <div class="navitem">歌单</div>
             </el-col>
-            <el-col :span="5">
-              <div class="navitem">
+            <el-col :span="8">
+              <div class="navitem ">
                 <musicSearch></musicSearch>
               </div>
             </el-col>
 
-            <el-col :span="5">
+            <el-col :span="10">
               <div class="navitem kk"></div>
             </el-col>
-            <el-col :span="5">
-              <div class="navitem">wwww</div>
-            </el-col>
+          
             <el-col :span="2">
               <div class="navitem ">
               
@@ -73,6 +71,10 @@ export default {
   },
   components: { musicSearch, loginform },
   methods: {
+    back(){
+      this.$router.go(-1)
+
+    },
     login(){
       this.$router.push("/list3/body/login")
     },
@@ -139,7 +141,8 @@ export default {
   justify-content: space-between;
 }
 .kk::after {
-  content: "qqq";
+  content: "";
+  width: 100px;
 }
 .navitem {
   color: var(--inactive-color);

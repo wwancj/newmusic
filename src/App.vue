@@ -12,18 +12,18 @@
 </template>
 <script>
 import imgurl from '@/assets/back.jpg'
-
+console.log(imgurl,"uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
 export default {
 data(){
   return {
-    //  imgUrl:require('@/assets/back.jpg')
+  
     imgurl
   }
   
 },
 
 };
-// url(https://wallpapershome.com/images/wallpapers/macos-big-sur-1280x720-dark-wwdc-2020-22655.jpg)
+
 </script>
 
 
