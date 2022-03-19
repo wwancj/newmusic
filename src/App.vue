@@ -12,7 +12,7 @@
 </template>
 <script>
 import imgurl from '@/assets/back.jpg'
-console.log(imgurl,"uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
+// console.log(imgurl,"uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
 export default {
 data(){
   return {
@@ -29,9 +29,16 @@ data(){
 
 <style >
 
+@font-face{
+  font-family: "myfont";
+  src: url("~@/assets/千图笔锋手写体.ttf");
+
+}
 #app{
+ 
   background-image: url("~@/assets/back.jpg");
   background-size: cover;
+
 }
 .v-enter {
   position: absolute;
@@ -101,6 +108,21 @@ data(){
     --search-bg: #14162b;
     --overlay-bg: rgba(36, 39, 59, 0.3);
     --scrollbar-bg: rgb(1 2 3 / 40%);
+
+
+
+    /* 新拟态ui */
+      --primary-light: #8abdff;
+  --primary: #6d5dfc;
+  --primary-dark: #5b0eeb;
+  --white: #FFFFFF;
+  --greyLight-1: #E4EBF5;
+  --greyLight-2: #c8d0e7;
+  --greyLight-3: #bec8e4;
+  --greyDark: #9baacf;
+
 }
+
+
 
 </style>

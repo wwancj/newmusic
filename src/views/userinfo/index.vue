@@ -141,7 +141,7 @@ export default {
           })
           .then((data) => {
             if (data.data.code != 400) {
-              console.log(data.data.playlist, "ml");
+           
               this.count = data.data.playlist.length || 0;
               this.musiclist = data.data.playlist;
              
@@ -154,7 +154,7 @@ export default {
     this.$axios
       .get("/user/level")
       .then((data) => {
-        console.log(data.data.data, "lv");
+      
         this.lv = data.data.data.level + data.data.data.progress;
       })
       .catch((err) => {
@@ -175,7 +175,7 @@ export default {
                     id
              }
          }).then((data)=>{
-             console.log("bangliast",data.data.songs);
+        
             
           
            this.$store.dispatch('songsfx',data.data.songs)

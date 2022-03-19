@@ -1,7 +1,7 @@
 <template>
 
   <div id="bofangq">
-   
+    <!-- <script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script> -->
       <div class="wrapper">
       <div class="player" ref="player">
         <div class="player__top">
@@ -34,10 +34,26 @@
               </svg>
             </div>
             <div class="player-controls__item -xl js-play" @click="play">
-              <svg class="icon">
+              <!-- <svg class="icon">
                 <use xlink:href="#icon-pause" v-if="isTimerPlaying"></use>
                 <use xlink:href="#icon-play" v-else></use>
-              </svg>
+              </svg> -->
+
+
+                  <div class="circle">
+      <span class="circle__btn">
+        <ion-icon class="mypause" name="pause"></ion-icon>
+        <ion-icon class="myplay" name="play"></ion-icon>
+      </span>
+      <span class="circle__back-1"></span>
+      <span class="circle__back-2"></span>
+    </div>
+
+
+
+
+
+
             </div>
           </div>
         </div>
@@ -112,14 +128,15 @@
       </defs>
     </svg>
      <!-- {{ $store.state.musiclist}} -->
-
-       <el-button type="primary" @click="getly">主要按钮</el-button>
+<!-- 
+       <el-button type="primary" @click="getly">主要按钮</el-button> -->
   </div>
 </template>
 
 <script>
 import {getlyric} from '@/api/music'
 import {lrc2Json} from "@/layout/lyric_json"
+
 export default {
   name:"bofangqi",
  data() {
@@ -149,10 +166,10 @@ export default {
     };
   },
   methods: {
-  async getly(){
-   let red = await getlyric(this.currentTrack.id)
-  //  console.log(lrc2Json(red),"个体ddd");
-    },
+  // async getly(){
+  //  let red = await getlyric(this.currentTrack.id)
+
+  //   },
     play() {
       if (this.audio.paused) {
         this.audio.play();
@@ -189,23 +206,28 @@ export default {
         cursec = "0" + cursec;
       }
 
-      this.lytime=this.audio.currentTime
+      
       this.duration = durmin + ":" + dursec;
       this.currentTime = curmin + ":" + cursec;
+      this.lytime=this.audio.currentTime
+
+          let newval=Math.floor( this.lytime*1000)
+             this.$store.commit('currentTime', newval)
+
     },
     updateBar(x) {
       let progress = this.$refs.progress;
       let maxduration = this.audio.duration;
        let player=this.$refs.player
       let position = x -progress.getBoundingClientRect().x;
-     console.log(progress.getBoundingClientRect().x,"222222");
+    //  console.log(progress.getBoundingClientRect().x,"222222");
       let percentage = (100 * position) / progress.offsetWidth;
-      console.log('progress.offsetWidth: ', progress.offsetWidth);
-      console.log('percentage: ', percentage);
-      console.log("容器左边",progress.offsetLeft+player.offsetLeft);
-      console.log('player.offsetLeft: ', player.offsetLeft);
-      console.log('zuo',progress.offsetLeft);
-      console.log(position,percentage)
+      // console.log('progress.offsetWidth: ', progress.offsetWidth);
+      // console.log('percentage: ', percentage);
+      // console.log("容器左边",progress.offsetLeft+player.offsetLeft);
+      // console.log('player.offsetLeft: ', player.offsetLeft);
+      // console.log('zuo',progress.offsetLeft);
+      // console.log(position,percentage)
 
       if (percentage > 100) {
         percentage = 100;
@@ -295,6 +317,8 @@ export default {
 
     this.audio.src = this.currentTrack.source;
     this.audio.ontimeupdate = function() {
+
+      
       vm.generateTime();
     };
     this.audio.onloadedmetadata = function() {
@@ -368,18 +392,34 @@ export default {
         },
         //正在播放的音乐 时间 监听
         "lytime":function(newval){
-             if(newval){
+          //    if(newval){
 
-              //  let mm=parseInt(newval.substring(0,2)*60*1000)+parseInt(newval.substring(3,5))*1000
-              //  console.log(mm)
-              newval=Math.floor(newval*1000)
-             this.$store.commit('currentTime', newval)
-          }
+          //     //  let mm=parseInt(newval.substring(0,2)*60*1000)+parseInt(newval.substring(3,5))*1000
+          //     //  console.log(mm)
+          //     newval=Math.floor(newval*1000)
+          //    this.$store.commit('currentTime', newval)
+          // }
           }
 
         
 
        
+  },
+  mounted(){
+const myplay = document.querySelector('.myplay');
+const mypause = document.querySelector('.mypause');
+const playBtn = document.querySelector('.circle__btn');
+const wave1 = document.querySelector('.circle__back-1');
+const wave2 = document.querySelector('.circle__back-2');
+console.log(mypause);
+playBtn.addEventListener('click', function(e) {
+  e.preventDefault();
+  mypause.classList.toggle('visibility');
+  myplay.classList.toggle('visibility');
+  playBtn.classList.toggle('shadow');
+  wave1.classList.toggle('paused');
+  wave2.classList.toggle('paused');
+});
   }
 }
 </script>
@@ -423,7 +463,9 @@ export default {
 }
 
 .player {
-  background: #eef3f7;
+background: var(--greyLight-1);
+    border-radius: 8px;
+    box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-2), -0.2rem -0.2rem 1.8rem var(--white);
   width: 400px;
   // min-height: 480px;
   // box-shadow: 0px 15px 35px -5px rgba(50, 88, 130, 0.32);
@@ -783,5 +825,112 @@ export default {
   opacity: 0;
 }
 
+}
+</style>
+
+
+<style scoped>
+@-webkit-keyframes waves {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes waves {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+.circle {
+  grid-column: 2/3;
+  grid-row: 4/6;
+  width: 9rem;
+  height: 100%;
+  justify-self: center;
+  border-radius: 1rem;
+  display: grid;
+  grid-template-rows: 1fr;
+  justify-items: center;
+  align-items: center;
+}
+.circle__btn {
+  grid-row: 1/2;
+  grid-column: 1/2;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  margin: 0.6rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 3.2rem;
+  color: var(--primary);
+  z-index: 300;
+  background: var(--greyLight-1);
+  box-shadow: 0.3rem 0.3rem 0.6rem var(--greyLight-2), -0.2rem -0.2rem 0.5rem var(--white);
+  cursor: pointer;
+  position: relative;
+}
+.circle__btn.shadow {
+  box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2), inset -0.2rem -0.2rem 0.5rem var(--white);
+}
+.circle__btn .myplay {
+  position: absolute;
+  opacity: 0;
+  transition: all 0.2s linear;
+}
+.circle__btn .myplay.visibility {
+  opacity: 1;
+}
+.circle__btn .mypause {
+  position: absolute;
+  transition: all 0.2s linear;
+}
+.circle__btn .mypause.visibility {
+  opacity: 0;
+}
+.circle__back-1, .circle__back-2 {
+  grid-row: 1/2;
+  grid-column: 1/2;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  filter: blur(1px);
+  z-index: 100;
+}
+.circle__back-1 {
+  box-shadow: 0.4rem 0.4rem 0.8rem var(--greyLight-2), -0.4rem -0.4rem 0.8rem var(--white);
+  background: linear-gradient(to bottom right, var(--greyLight-2) 0%, var(--white) 100%);
+  -webkit-animation: waves 4s linear infinite;
+          animation: waves 4s linear infinite;
+}
+.circle__back-1.paused {
+  -webkit-animation-play-state: paused;
+          animation-play-state: paused;
+}
+.circle__back-2 {
+  box-shadow: 0.4rem 0.4rem 0.8rem var(--greyLight-2), -0.4rem -0.4rem 0.8rem var(--white);
+  -webkit-animation: waves 4s linear 2s infinite;
+          animation: waves 4s linear 2s infinite;
+}
+.circle__back-2.paused {
+  -webkit-animation-play-state: paused;
+          animation-play-state: paused;
 }
 </style>

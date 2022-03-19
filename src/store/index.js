@@ -24,7 +24,12 @@ export default new Vuex.Store({
     loading:false,
     isplay:false,
     currentTrack:null,
-    currentTime:null
+    currentTime:null,
+
+
+    //下拉框开关
+
+    con:false
 
   },
   actions: {
@@ -33,7 +38,7 @@ export default new Vuex.Store({
     },
 
     musicids(context,value){
-      console.log(value,"vux 收到");
+      // console.log(value,"vux 收到");
           context.commit("MIDS",value)
     },
 
@@ -47,7 +52,7 @@ export default new Vuex.Store({
 
     isstart(context,value){
       context.commit("isstart",value)
-      console.log("bofangqi",value);
+      // console.log("bofangqi",value);
     },
 
     setloading(context,value){
@@ -99,6 +104,9 @@ export default new Vuex.Store({
     },
     musics_init(state){
       state.musics=[]
+    },
+    con(state,val){
+          state.con=val
     },
 
     //全局音乐开关

@@ -98,8 +98,8 @@ export default {
       hots.forEach((item) => {
         this.searchlist.push({ value: item.first });
       });
-      console.log(this.searchlist);
-      console.log("搜索热门推荐", result.data.result.hots);
+      // console.log(this.searchlist);
+      // console.log("搜索热门推荐", result.data.result.hots);
     });
 
 

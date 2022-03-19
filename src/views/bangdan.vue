@@ -34,7 +34,7 @@ export default {
                     id
              }
          }).then((data)=>{
-             console.log("bangliast",data.data.songs);
+           
             
           this.$store.dispatch('isstart',"list")
          this.$store.dispatch('songsfx',data.data.songs)

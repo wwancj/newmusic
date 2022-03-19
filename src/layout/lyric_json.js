@@ -1,6 +1,6 @@
 export const lrc2Json = (lrc) => {
 
-  console.log(lrc,"jieshoudao")
+  // console.log(lrc,"jieshoudao")
     let arr = lrc.split('\n')
     let timeReg = /^\[.*\]/
     let json = []

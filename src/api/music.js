@@ -52,3 +52,13 @@ export let getlyric=async function getlyric(id){
     })
     return res
 }
+
+export let getcomments=async (id,limit)=>{
+    let res=await instance.get("/comment/music",{
+        params:{
+            id,
+            limit
+        }
+    })
+    return res
+}

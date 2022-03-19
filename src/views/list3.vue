@@ -1,8 +1,8 @@
 <template>
   <div class="listl">
-    <div id="fle">--------------</div>
+    <div id="fle"> 搜索结果</div>
     <div id="bt">
-      最新歌曲
+     
       <div class="content">
 
         <transition-group>
@@ -38,6 +38,7 @@ export default {
   
 
       this.$store.dispatch("currentIndex", index);
+      this.$store.commit('con', true)
       // this.$store.dispatch("isstart", "bfq");
       // this.$router.push("/list3/body/play");
       // console.log(this.$route.path);
@@ -77,7 +78,7 @@ white-space: nowrap;
   height: 400px;
 
   background-color: rgba(118, 120, 121, 0.25);
-color: rgb(125, 145, 161);
+color: aliceblue;
 font-weight:100;
 -webkit-border-top-left-radius:5px;
 -webkit-border-top-right-radius:5px;
@@ -87,10 +88,10 @@ font-weight:100;
 -moz-border-radius-topright:5px;
 -moz-border-radius-bottomright:5px;
 -moz-border-radius-bottomleft:5px;
-border-top-left-radius:5px;
-border-top-right-radius:5px;
-border-bottom-right-radius:5px;
-border-bottom-left-radius:5px;
+border-top-left-radius:10px;
+border-top-right-radius:10px;
+border-bottom-right-radius:10px;
+border-bottom-left-radius:10px;
   overflow: scroll;
   &>span>div:hover{
     background-color: rgba(14, 69, 97, 0.25);
@@ -124,7 +125,7 @@ border-bottom-left-radius:5px;
   left: 0px;
 }
 .v-enter-active {
-  transition: left 0.7s;
+  transition: left 1.7s;
 }
 .v-leave {
   position: relative;

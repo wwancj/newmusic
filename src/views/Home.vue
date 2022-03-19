@@ -9,7 +9,7 @@
 
     <el-drawer
       title=""
-      :visible.sync="drawer"
+      :visible.sync="$store.state.con"
       direction="ttb"
       size="100%"
     >
@@ -27,10 +27,13 @@
 </template>
 
 <script>
+
+
+
 import myNav from "views/nav/nav";
 // import musicSearch from "./musicSearch";
 import bangdan from "./bangdan.vue";
-import { animation } from "./body2/index.js";
+import { animation } from "@/layout/main_anima.js";
 import loginform from "./login/loginform.vue";
 
 import bofangqi from 'views/bofangqi'
@@ -83,12 +86,7 @@ export default {
       this.dialogFormVisible = res;
     },
     handleClose(done) {
-      this.$confirm("还有未保存的工作哦确定关闭吗？")
-        .then((_) => {
-          done();
-        })
-        .catch((_) => {});
-    },
+    }
   },
   created() {
     this.$axios.get("/user/account").then((data) => {
@@ -99,6 +97,10 @@ export default {
   mounted() {
     animation();
   },
+  beforeMount(){
+    this.drawer=this.$store.con
+    console.log(this.$store.state.con,"kkkkkkk");
+  }
 };
 </script>
 

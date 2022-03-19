@@ -50,8 +50,8 @@ return {
   
      form: {
         name: "登录",
-        user:"18379166922",
-        pws:"Wcj13755629453",
+        user:"",
+        pws:"",
         
       },
       show:true
@@ -81,14 +81,16 @@ async login(){
 },
 async ilogin(){
    const res= await islogin()
-   if(res?.data?.id!=""){
+  //  console.log(res?.data?.id,55555555);
+   if(res?.data?.id){
     //  alert(12)
     Message({
       type:"success",
       message:"欢迎回来"
     })
+    
    }
-   this.$router.push('/list3/body/musicls')
+  //  this.$router.push('/list3/body/musicls')
 }
 
 },

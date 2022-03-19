@@ -46,7 +46,7 @@
             <el-col :span="2">
               <div class="navitem user" @click="login">
                 <el-avatar
-                  src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                  :src="userinfo.avatarUrl"
                 ></el-avatar>
               </div>
             </el-col>
@@ -62,11 +62,14 @@
 <script>
 import musicSearch from "views/musicSearch";
 import loginform from "../login/loginform.vue";
+
+import { getuserinfo } from "../../api/userinfo";
 export default {
   name: "myNav",
   data() {
     return {
       dialogFormVisible: false,
+      userinfo:{avatarUrl:""}
     };
   },
   components: { musicSearch, loginform },
@@ -108,23 +111,27 @@ export default {
     outlogin() {
       this.$axios.get("/logout").then((result) => {
         localStorage.removeItem("userid");
-        console.log("退出登录", result);
+        // console.log("退出登录", result);
       });
     },
     loginfromshow(res) {
       this.dialogFormVisible = res;
     },
   },
-  mounted() {
-    // alert(window.location.hash)
-    // console.log();
-    // document.querySelectorAll(`[class="el-menu-item"]`).forEach((item)=>{
-    //   item.addEventListener("mouseover",()=>{
-    //     // alert(1122)
-    //     item.style.backgroundColor="red"
-    //   })
-    // })
+  async mounted() {
+     let info= await getuserinfo()
+     console.log(info,"22222222"); 
+     if(info){
+         this.userinfo=info
+     }
+   
+   
   },
+  
+  async created(){
+     
+  }
+
 };
 </script>
 <style lang="less" scoped>

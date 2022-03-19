@@ -14,8 +14,8 @@
     methods: {
          star(i,index){
              let ii=[i]
-             console.log(this.musics,"1111111")
-             console.log(ii,"222222222222222222");
+            //  console.log(this.musics,"1111111")
+            //  console.log(ii,"222222222222222222");
              this.$store.dispatch("findmusic",ii)
              this.$store.dispatch("muiscs",this.musics)
               this.$store.dispatch("currentIndex",index)

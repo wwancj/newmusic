@@ -2,7 +2,6 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-
 import axios from "axios"
 
 // axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
@@ -24,10 +23,13 @@ Vue.prototype.$gettime= function time(nS) {
 axios.defaults.withCredentials = true; 
 axios.defaults.baseURL=process.env.VUE_APP_API_URL
 // axios.defaults.baseURL="http://127.0.0.1/api"
-
+//git 的 token
+//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  
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+
+
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 
@@ -37,4 +39,4 @@ new Vue({
   render: (h) => h(App),
 }).$mount('#app');
 
-console.log(store,store);
+// console.log(store,store);
